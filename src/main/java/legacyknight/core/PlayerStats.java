@@ -7,10 +7,15 @@ package legacyknight.core;
  */
 public class PlayerStats {
 
-    public int level = 1;
-    public int exp = 0;
-    public int maxHp = 100;
-    public int attack = 25;
+    private int level = 1;
+    private int exp = 0;
+    private int maxHp = 100;
+    private int attack = 25;
+
+    public int getLevel()  { return level; }
+    public int getExp()    { return exp; }
+    public int getMaxHp()  { return maxHp; }
+    public int getAttack() { return attack; }
 
     /** EXP ที่ต้องมีเพื่อขึ้นเลเวลถัดไป (เลเวลสูงขึ้น ยิ่งใช้เยอะ) */
     public int expNeeded() {

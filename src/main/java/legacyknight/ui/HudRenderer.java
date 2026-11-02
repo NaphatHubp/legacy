@@ -46,16 +46,16 @@ final class HudRenderer {
     private static void drawHealthAndExp(Graphics2D g, Player p, PlayerStats stats) {
         Gui.panel(g, 10, 10, 330, 84, 0.9f);
         Gui.sprite(g, Sprites.HEART, 26, 27, 3, true);
-        double hpFrac = p.hp / (double) stats.maxHp;
+        double hpFrac = p.getHp() / (double) stats.getMaxHp();
         Gui.bar(g, 62, 28, 200, 14, hpFrac, hpFrac < 0.3 ? new Color(255, 90, 80) : new Color(226, 84, 84),
                 new Color(138, 30, 48), 10);
-        Gui.text(g, p.hp + "/" + stats.maxHp, Gui.body(22), Gui.BONE, 276, 42, -1);
+        Gui.text(g, p.getHp() + "/" + stats.getMaxHp(), Gui.body(22), Gui.BONE, 276, 42, -1);
 
         Gui.sprite(g, Sprites.GEM, 26, 56, 3, true);
-        Gui.bar(g, 62, 60, 200, 8, stats.exp / (double) stats.expNeeded(), new Color(130, 224, 140),
+        Gui.bar(g, 62, 60, 200, 8, stats.getExp() / (double) stats.expNeeded(), new Color(130, 224, 140),
                 new Color(48, 130, 76), 0);
-        Gui.text(g, "LV " + stats.level, Gui.body(22), Gui.GOLD_L, 276, 70, -1);
-        Gui.text(g, "ATK " + stats.attack, Gui.body(20), Gui.BONE_D, 62, 88, -1);
+        Gui.text(g, "LV " + stats.getLevel(), Gui.body(22), Gui.GOLD_L, 276, 70, -1);
+        Gui.text(g, "ATK " + stats.getAttack(), Gui.body(20), Gui.BONE_D, 62, 88, -1);
     }
 
     // ---------- ภารกิจ (มุมขวาบน) ----------
@@ -74,7 +74,7 @@ final class HudRenderer {
     private static void drawBossBar(Graphics2D g, GameWorld world) {
         Enemy boss = null;
         for (Enemy e : world.enemies) {
-            if (e.alive && e.type.isBoss() && Math.abs(e.x - world.player.x) < 900) {
+            if (e.isAlive() && e.type.isBoss() && Math.abs(e.x - world.player.x) < 900) {
                 boss = e;
                 break;
             }
@@ -89,7 +89,7 @@ final class HudRenderer {
         Color top = boss.mutated ? new Color(210, 130, 255) : new Color(240, 90, 80);
         Color bottom = boss.mutated ? new Color(96, 36, 160) : new Color(140, 26, 40);
         Gui.sprite(g, Sprites.SKULL, x - 34, y - 6, 3, true);
-        Gui.bar(g, x, y, w, 16, boss.hp / (double) boss.maxHp, top, bottom, 0);
+        Gui.bar(g, x, y, w, 16, boss.getHp() / (double) boss.getMaxHp(), top, bottom, 0);
 
         // ขีดกลางแถบ = จุดที่เลือดเหลือครึ่งเดียวแล้วจะกลายพันธุ์
         g.setColor(new Color(255, 255, 255, 200));
@@ -109,7 +109,7 @@ final class HudRenderer {
         BufferedImage fill = Assets.image("ui/boss_fill.png");
         int fx = SCREEN_W / 2 + 40 - frame.getWidth() * s / 2, fy = 52;
         int ix = fx + 3 * s, iy = fy + 19 * s, iw = fill.getWidth() * s, ih = fill.getHeight() * s;
-        double frac = Math.max(0, boss.hp / (double) boss.maxHp);
+        double frac = Math.max(0, boss.getHp() / (double) boss.getMaxHp());
 
         g.setColor(new Color(10, 8, 20, 220));
         g.fillRect(ix, iy, iw, ih);
@@ -135,7 +135,7 @@ final class HudRenderer {
     private static void drawMutationWarning(Graphics2D g, GameWorld world, double time) {
         Enemy mutating = null;
         for (Enemy e : world.enemies) {
-            if (e.alive && e.mutating) { mutating = e; break; }
+            if (e.isAlive() && e.mutating) { mutating = e; break; }
         }
         if (mutating == null) return;
 

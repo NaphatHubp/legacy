@@ -44,7 +44,7 @@ public class GameWorld {
 
     public final Level level;
     public final PlayerStats stats;
-    public final Player player = new Player();
+    public final Player player;
     public final List<Enemy> enemies = new ArrayList<Enemy>();
     public final List<Arrow> arrows = new ArrayList<Arrow>();
     public final List<Telegraph> telegraphs = new ArrayList<Telegraph>();
@@ -66,12 +66,8 @@ public class GameWorld {
         this.stats = stats;
 
         // วางผู้เล่นที่จุดเริ่มต้น เลือดเต็ม
-        player.w = PLAYER_W;
-        player.h = STAND_H;
-        player.x = 60;
-        player.y = GROUND_Y - STAND_H;
+        player = new Player(60, GROUND_Y - STAND_H, PLAYER_W, STAND_H, stats.getMaxHp());
         player.facing = 1;
-        player.hp = stats.maxHp;
 
         // สร้างศัตรูตามจุดเกิดของด่าน
         for (Spawn s : level.spawns) {
@@ -91,7 +87,7 @@ public class GameWorld {
         if (shakeTime > 0) shakeTime -= dt;
         if (status == Status.LOST) player.deadTime += dt;
         for (Enemy e : enemies) {
-            if (!e.alive) e.deathTime += dt;
+            e.updateDeathTime(dt);
         }
         for (Iterator<Particle> it = particles.iterator(); it.hasNext(); ) {
             Particle q = it.next();
@@ -108,7 +104,7 @@ public class GameWorld {
         PlayerController.update(this, input, dt);
 
         for (Enemy e : enemies) {
-            if (!e.alive) continue;
+            if (!e.isAlive()) continue;
             e.animTime += dt;
             e.hurtTimer = Math.max(0, e.hurtTimer - dt);
             e.contactCooldown -= dt;
@@ -233,9 +229,8 @@ public class GameWorld {
             burst(p.x + p.w / 2.0, p.y + p.h / 2.0, 10, new Color(255, 110, 150));
         }
 
-        p.hp -= damage;
-        if (p.hp <= 0) {
-            p.hp = 0;
+        p.setHp(p.getHp() - damage);
+        if (p.getHp() <= 0) {
             status = Status.LOST;
         }
     }
@@ -271,7 +266,7 @@ public class GameWorld {
             e.hurtTimer = 0.15;
             burst(cx, cy, 8, new Color(255, 240, 150));
         }
-        e.hp -= damage;
+        e.takeDamage(damage);
 
         // สไลม์/Ramses โดนตีแล้วกระเด็นและมึนงง (ตัวหนักกระเด็นน้อยกว่า)
         double knock = e.type.knockback();
@@ -281,13 +276,12 @@ public class GameWorld {
             e.stun = e.type.isSlime() || e.type == EnemyType.RAMSES ? Math.max(0.1, 0.25 * knock) : 0;
         }
 
-        if (e.hp <= 0) {
-            e.alive = false;
-            e.deathTime = 0;
+        if (e.getHp() <= 0) {
+            e.die();
             e.meleePending = false;
             burst(cx, cy, 22, deathColor(e));
             if (e.type.isSlime()) {
-                player.hp = Math.min(stats.maxHp, player.hp + SLIME_HEAL);   // ฆ่าสไลม์ได้เลือดคืน
+                player.setHp(Math.min(stats.getMaxHp(), player.getHp() + SLIME_HEAL));   // ฆ่าสไลม์ได้เลือดคืน
             } else if (e.type.isBoss()) {
                 arrows.clear();            // บอสตาย ลูกยิงหายหมด
                 telegraphs.clear();
@@ -318,8 +312,8 @@ public class GameWorld {
 
     private void gainExp(int amount) {
         if (stats.addExp(amount)) {
-            player.hp = stats.maxHp;     // เลเวลอัป = เลือดเต็ม
-            banner.show("LEVEL UP!  Lv " + stats.level + "   (+HP  +ATK)", 2.5);
+            player.setHp(stats.getMaxHp());     // เลเวลอัป = เลือดเต็ม
+            banner.show("LEVEL UP!  Lv " + stats.getLevel() + "   (+HP  +ATK)", 2.5);
         }
     }
 
@@ -331,7 +325,7 @@ public class GameWorld {
     public int aliveCount() {
         int n = 0;
         for (Enemy e : enemies) {
-            if (e.alive) n++;
+            if (e.isAlive()) n++;
         }
         return n;
     }

@@ -31,10 +31,10 @@ final class RamsesRenderer {
         float alpha = 1f;
         double squash = 1;
 
-        if (!e.alive) {
+        if (!e.isAlive()) {
             // Ramses ไม่มีท่าตาย: ยุบตัวลงแล้วจางหาย
-            if (e.deathTime > DEATH_TIME) return;
-            double p = e.deathTime / DEATH_TIME;
+            if (e.getDeathTime() > DEATH_TIME) return;
+            double p = e.getDeathTime() / DEATH_TIME;
             frame = Assets.animation("ramses/idle.png").frame(0);
             alpha = (float) (1 - p);
             squash = 1 - 0.6 * p;
@@ -64,10 +64,10 @@ final class RamsesRenderer {
 
         BufferedImage glow = null;
         float glowAlpha = 0;
-        if (e.alive && e.hurtTimer > 0) {
+        if (e.isAlive() && e.hurtTimer > 0) {
             glow = Assets.whitened(frame);
             glowAlpha = 0.85f;
-        } else if (e.alive && e.state == EnemyState.RAMSES_TIRED) {
+        } else if (e.isAlive() && e.state == EnemyState.RAMSES_TIRED) {
             glow = Assets.whitened(frame);
             glowAlpha = (float) (0.15 + 0.25 * (0.5 + 0.5 * Math.sin(e.animTime * 14)));
         }

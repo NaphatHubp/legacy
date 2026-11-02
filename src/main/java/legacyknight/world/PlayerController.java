@@ -92,7 +92,7 @@ final class PlayerController {
 
         // ตกหลุมนอกจอ = แพ้ทันที
         if (p.y > SCREEN_H + 80) {
-            p.hp = 0;
+            p.setHp(0);
             world.status = GameWorld.Status.LOST;
         }
     }
@@ -105,10 +105,10 @@ final class PlayerController {
         double ah = p.h + 6;
 
         for (Enemy e : world.enemies) {
-            if (e.alive && !p.alreadyHit.contains(e)
+            if (e.isAlive() && !p.alreadyHit.contains(e)
                     && MathUtil.overlaps(ax, ay, ATTACK_REACH, ah, e.x, e.y, e.w, e.h)) {
                 p.alreadyHit.add(e);
-                world.hurtEnemy(e, world.stats.attack, p.facing);
+                world.hurtEnemy(e, world.stats.getAttack(), p.facing);
             }
         }
 

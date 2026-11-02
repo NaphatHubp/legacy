@@ -222,13 +222,13 @@ final class ScreenRenderer {
         Gui.panel(g, 190, SCREEN_H - 76, 580, 52, 0.94f);
         int sy = SCREEN_H - 43;
         Gui.sprite(g, Sprites.CROWN, 206, sy - 17, 2, false);
-        Gui.text(g, "KNIGHT  LV " + game.getStats().level, Gui.body(25), Gui.GOLD_L, 232, sy, -1);
+        Gui.text(g, "KNIGHT  LV " + game.getStats().getLevel(), Gui.body(25), Gui.GOLD_L, 232, sy, -1);
         Gui.sprite(g, Sprites.HEART, 400, sy - 16, 2, true);
-        Gui.text(g, "" + game.getStats().maxHp, Gui.body(25), Gui.BONE, 422, sy, -1);
+        Gui.text(g, "" + game.getStats().getMaxHp(), Gui.body(25), Gui.BONE, 422, sy, -1);
         Gui.sprite(g, Sprites.SWORD, 490, sy - 20, 2, true);
-        Gui.text(g, "" + game.getStats().attack, Gui.body(25), Gui.BONE, 512, sy, -1);
+        Gui.text(g, "" + game.getStats().getAttack(), Gui.body(25), Gui.BONE, 512, sy, -1);
         Gui.sprite(g, Sprites.GEM, 570, sy - 15, 2, true);
-        Gui.text(g, game.getStats().exp + "/" + game.getStats().expNeeded(), Gui.body(25), Gui.BONE, 592, sy, -1);
+        Gui.text(g, game.getStats().getExp() + "/" + game.getStats().expNeeded(), Gui.body(25), Gui.BONE, 592, sy, -1);
 
         Rectangle back = UiLayout.BACK_BUTTON;
         Gui.button(g, back, "BACK", back.contains(mouseX, mouseY), false, time);

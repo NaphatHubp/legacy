@@ -57,9 +57,9 @@ final class SlimeRenderer {
         boolean flash = e.hurtTimer > 0;
         BufferedImage frame;
 
-        if (!e.alive) {
-            if (e.deathTime > DEATH_LINGER) return;
-            frame = anim(color, "dead").at(e.deathTime / DEATH_TIME);
+        if (!e.isAlive()) {
+            if (e.getDeathTime() > DEATH_LINGER) return;
+            frame = anim(color, "dead").at(e.getDeathTime() / DEATH_TIME);
             flash = false;
         } else {
             frame = pickFrame(e, color);
@@ -72,7 +72,7 @@ final class SlimeRenderer {
 
         drawFrame(g, frame, cx + shakeX, foot, e.dir > 0, scale, flash);
 
-        if (e.alive && e.type == EnemyType.BRUTE && e.state == EnemyState.BRUTE_WINDUP) {
+        if (e.isAlive() && e.type == EnemyType.BRUTE && e.state == EnemyState.BRUTE_WINDUP) {
             g.setFont(new Font("SansSerif", Font.BOLD, 30));
             g.setColor(new Color(255, 70, 60));
             DrawUtil.centered(g, "!", cx, e.y - 12);

@@ -10,16 +10,16 @@ import legacyknight.level.Spawn;
 public class Enemy extends Entity {
 
     public final EnemyType type;
-    public int hp;
-    public final int maxHp;
-    public boolean alive = true;
+    private int hp;
+    private final int maxHp;
+    private boolean alive = true;
     /** เวลาตั้งแต่ตาย (ใช้เล่นแอนิเมชันตายของปีศาจ) */
-    public double deathTime;
+    private double deathTime;
 
     /** ทิศที่เดิน: 1 = ขวา, -1 = ซ้าย */
     public int dir = -1;
     /** จุดเกิด ใช้เป็นศูนย์กลางที่สไลม์เดินเล่นไปมา */
-    public final double homeX;
+    private final double homeX;
 
     /** "เฟส" ของปีศาจ: 0 = ปกติ, 1 = โหดขึ้น (บอส: ร่างกลายพันธุ์) */
     public int phase;
@@ -82,6 +82,28 @@ public class Enemy extends Entity {
         y = s.feetY - h;
         homeX = s.x;
         hp = maxHp = s.hp;
+    }
+
+    public int getHp()           { return hp; }
+    public int getMaxHp()        { return maxHp; }
+    public boolean isAlive()     { return alive; }
+    public double getDeathTime() { return deathTime; }
+    public double getHomeX()     { return homeX; }
+
+    /** ลดเลือดตามดาเมจ (ไม่ต่ำกว่า 0) */
+    public void takeDamage(int damage) {
+        hp = Math.max(0, hp - damage);
+    }
+
+    /** ให้ตายทันที (เริ่มนับเวลาแอนิเมชันตายใหม่) */
+    public void die() {
+        alive = false;
+        deathTime = 0;
+    }
+
+    /** นับเวลาตั้งแต่ตาย เรียกทุกเฟรมเฉพาะตอนที่ตายแล้ว */
+    public void updateDeathTime(double dt) {
+        if (!alive) deathTime += dt;
     }
 
     /** ตอนนี้โดนดาบไม่ได้ไหม (กำลังกลายพันธุ์/เปลี่ยนร่าง หรือ Dead กำลังหายตัว) */

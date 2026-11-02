@@ -75,7 +75,7 @@ final class WorldRenderer {
         for (Telegraph t : world.telegraphs) drawTelegraph(g, t, time);
 
         for (Enemy e : world.enemies) {
-            if (e.alive) drawEnemy(g, world, e, time);
+            if (e.isAlive()) drawEnemy(g, world, e, time);
             else drawEnemy(g, world, e, time);                      // แอนิเมชันตาย (ถ้ามี)
         }
         for (Arrow a : world.arrows) drawFireball(g, a);
@@ -162,13 +162,13 @@ final class WorldRenderer {
         double cx = e.x + e.w / 2.0;
         if (e.type == EnemyType.RAMSES) RamsesRenderer.draw(g, e, time);
         else SlimeRenderer.draw(g, e, time);
-        if (e.alive && e.hp < e.maxHp) {
+        if (e.isAlive() && e.getHp() < e.getMaxHp()) {
             // แถบเลือดเล็กๆ เหนือหัว (โผล่เมื่อโดนตีแล้ว)
             int top = (int) e.y - (e.type == EnemyType.RAMSES ? 44 : 14);
             g.setColor(new Color(0, 0, 0, 150));
             g.fillRect((int) cx - 20, top, 40, 5);
             g.setColor(new Color(255, 90, 110));
-            g.fillRect((int) cx - 20, top, (int) (40.0 * e.hp / e.maxHp), 5);
+            g.fillRect((int) cx - 20, top, (int) (40.0 * e.getHp() / e.getMaxHp()), 5);
         }
     }
 

@@ -10,7 +10,21 @@ public class Player extends Entity {
 
     /** หันไปทางไหน: 1 = ขวา, -1 = ซ้าย */
     public int facing = 1;
-    public int hp;
+    private int hp;
+
+    /** สร้างผู้เล่นที่จุดเริ่มต้น ด้วยขนาดกล่องชนและเลือดเริ่มต้น */
+    public Player(double x, double y, int w, int h, int hp) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.hp = hp;
+    }
+
+    public int getHp() { return hp; }
+
+    /** กำหนดเลือด (ไม่ต่ำกว่า 0) */
+    public void setHp(int hp) { this.hp = Math.max(0, hp); }
 
     public boolean crouch;
     public boolean blocking;

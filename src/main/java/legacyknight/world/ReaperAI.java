@@ -88,7 +88,7 @@ final class ReaperAI {
         }
 
         // ---- เลือดถึงครึ่ง: เริ่มคำเตือน ----
-        if (!e.mutated && e.hp <= e.maxHp * 0.5) {
+        if (!e.mutated && e.getHp() <= e.getMaxHp() * 0.5) {
             beginRage(world, e, cx, cy);
             return;
         }
@@ -117,7 +117,7 @@ final class ReaperAI {
             else if (Math.abs(dist) > want + 90) e.vx = Math.signum(dist) * speed;    // เข้าหา
         }
         e.applyPhysics(dt, world.level);
-        double minCx = e.homeX - 150, maxCx = e.homeX + 190;       // ไม่ออกนอกแท่นบัลลังก์
+        double minCx = e.getHomeX() - 150, maxCx = e.getHomeX() + 190;       // ไม่ออกนอกแท่นบัลลังก์
         double ncx = MathUtil.clamp(e.x + e.w / 2.0, minCx, maxCx);
         e.x = ncx - e.w / 2.0;
 
@@ -210,7 +210,7 @@ final class ReaperAI {
     // =====================================================================
     private static void startTeleport(GameWorld world, Enemy e, double cx, double cy, double px) {
         // เลือกด้านซ้ายหรือขวาของผู้เล่น ห่างประมาณ 130 พิกเซล (อยู่ในแท่นบัลลังก์เท่านั้น)
-        double minCx = e.homeX - 150, maxCx = e.homeX + 190;
+        double minCx = e.getHomeX() - 150, maxCx = e.getHomeX() + 190;
         double side = world.rng.nextBoolean() ? 1 : -1;
         double dest = MathUtil.clamp(px + side * 130, minCx, maxCx);
         if (Math.abs(dest - px) < 90) dest = MathUtil.clamp(px - side * 130, minCx, maxCx);

@@ -61,9 +61,9 @@ final class DemonRenderer {
         double shakeX = 0;
         BufferedImage frame;
 
-        if (!e.alive) {
-            if (e.deathTime > DEATH_LINGER) return;
-            frame = anim("death", variant).at(e.deathTime / DEATH_TIME);
+        if (!e.isAlive()) {
+            if (e.getDeathTime() > DEATH_LINGER) return;
+            frame = anim("death", variant).at(e.getDeathTime() / DEATH_TIME);
             hover = -10;
         } else if (e.mutating) {
             // ร่างเก่ากับร่างใหม่กระพริบสลับกัน ยิ่งใกล้หมดเวลายิ่งถี่ ตัวสั่นด้วย
@@ -86,7 +86,7 @@ final class DemonRenderer {
         }
 
         // ออร่าม่วงของร่างกลายพันธุ์ (และตอนกำลังกลายพันธุ์)
-        if (e.alive && (e.mutated || e.mutating)) {
+        if (e.isAlive() && (e.mutated || e.mutating)) {
             double pulse = 0.5 + 0.5 * Math.sin(time * 5);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) (0.14 + 0.1 * pulse)));
             g.setColor(new Color(190, 90, 255));

@@ -64,8 +64,8 @@ final class EnemyAI {
     /** เดินเล่น: เดินไปไม่เกิน 140 พิกเซลจากจุดเกิดแล้วเดินกลับ (ปรับ e.dir ให้) */
     private static void wander(GameWorld world, Enemy e) {
         double cx = centerX(e);
-        boolean walkingAwayFromHome = (cx > e.homeX) == (e.dir > 0);
-        if (Math.abs(cx - e.homeX) > 140 && walkingAwayFromHome) e.dir = -e.dir;
+        boolean walkingAwayFromHome = (cx > e.getHomeX()) == (e.dir > 0);
+        if (Math.abs(cx - e.getHomeX()) > 140 && walkingAwayFromHome) e.dir = -e.dir;
         if (cliffAhead(world, e, e.dir)) e.dir = -e.dir;
     }
 
@@ -88,7 +88,7 @@ final class EnemyAI {
     /** ตกหลุมแล้วหายไป / ชนกำแพงแล้วเดินกลับหลัง (ใช้หลัง applyPhysics) */
     private static void afterPhysics(Enemy e) {
         if (e.hitWall && e.stun <= 0 && e.state != EnemyState.HOP_AIR) e.dir = -e.dir;
-        if (e.y > SCREEN_H + 100) e.alive = false;
+        if (e.y > SCREEN_H + 100) e.die();
     }
 
     // =====================================================================

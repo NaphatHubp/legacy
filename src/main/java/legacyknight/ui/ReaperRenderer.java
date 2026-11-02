@@ -52,9 +52,9 @@ final class ReaperRenderer {
         float alpha = 1f;
         BufferedImage frame;
 
-        if (!e.alive) {
-            if (e.deathTime > DEATH_LINGER) return;
-            frame = anim("death", raged).at(e.deathTime / DEATH_TIME);
+        if (!e.isAlive()) {
+            if (e.getDeathTime() > DEATH_LINGER) return;
+            frame = anim("death", raged).at(e.getDeathTime() / DEATH_TIME);
             hover = -8;
         } else if (e.state == EnemyState.REAPER_HIDDEN) {
             return;                                                  // หายตัวอยู่ ไม่มีอะไรให้วาด
@@ -84,7 +84,7 @@ final class ReaperRenderer {
         }
 
         // ออร่าของร่างคลั่ง (และตอนกำลังเปลี่ยนร่าง)
-        if (e.alive && raged) {
+        if (e.isAlive() && raged) {
             double pulse = 0.5 + 0.5 * Math.sin(time * 5);
             g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) ((0.14 + 0.1 * pulse) * alpha)));
             g.setColor(new Color(220, 70, 190));

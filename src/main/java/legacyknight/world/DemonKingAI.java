@@ -46,7 +46,7 @@ final class DemonKingAI {
             return;
         }
         // ---- เลือดถึงครึ่ง: เริ่มคำเตือน ----
-        if (!e.mutated && e.hp <= e.maxHp * 0.5) {
+        if (!e.mutated && e.getHp() <= e.getMaxHp() * 0.5) {
             beginMutation(world, e, cx, cy);
             return;
         }
