@@ -1,0 +1,23 @@
+# ไฟล์ที่ได้จากการคอมไพล์
+out/
+target/
+*.class
+*.jar
+
+# ไฟล์ของ IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+nbproject/
+
+# ไฟล์ของระบบ
+.DS_Store
+Thumbs.db
+
+assets_src/meow_knight/
+assets_src/flying_demon/
+assets_src/ramses/
+assets_src/peaceful_nightfield/
