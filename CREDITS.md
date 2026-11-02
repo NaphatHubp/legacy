@@ -17,7 +17,7 @@ The original packs are **not** redistributed in this repository - download them 
 | [**Free - Pixel Art Character Boss**](https://bruno-farias.itch.io/sidescroller-character-boss) ("Dead") | Bruno Farias | Final boss (idle / attack / hurt / death), scythe-wave projectile, boss health-bar frame | Free assets may be used in personal or commercial projects and modified. |
 | [**Enemy Character - Pixel Art [Animation Pack]**](https://incolgames.itch.io/enemycharacterpixelart) ("Ramses") | David G (incolgames) | Regular enemy Ramses (idle / track / walk) | May be used and modified. Not to be resold or redistributed individually. Credit appreciated. |
 | [**Peaceful Nightfield**](https://trixelized.itch.io/nightfield) | Trixie | Tileset: grass, dirt, bridges, trees, flowers, night sky and mountains | The itch.io page states no explicit licence. Used here with credit, for non-commercial educational purposes. Rights remain with the author. |
-| **Platformer Slimes v2.0** - "Pixelsnorf's Free Platformer Slimes" | Pixelsnorf | The three slimes (Hopper, Spitter, Brute) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Modified: only the top row of each 32x32 sheet is used, sliced by a script. Source: https://pixelsnorf.itch.io/ *(replace with the exact pack page URL)* |
+| [**Pixelsnorf's Free Platformer Slimes**](https://pixelsnorf.itch.io/platformer-slimes) v2.0 | Pixelsnorf | The three slimes (Hopper, Spitter, Brute) | *Pixelsnorf's Free Platformer Slimes (c) 2023-2026, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)*. Changes made: only the top row of each 32x32 sheet is used, sliced and recoloured by a script. |
 
 ## Fonts
 

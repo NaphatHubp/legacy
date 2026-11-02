@@ -99,7 +99,7 @@ java -cp out legacyknight.Main
 
 ```
 the-legacy-knight/
-├── assets_src/                  Original art packs, untouched (see CREDITS.md)
+├── assets_src/                  Source art kept in the repo: Dead boss, Platformer Slimes, fonts (other packs not included - see CREDITS.md)
 ├── tools/prepare_assets.py      Turns assets_src/ into game-ready sprite strips
 ├── scripts/                     run.sh / run.bat
 └── src/main/
@@ -143,12 +143,11 @@ the-legacy-knight/
 | Rewrite the story | `story/Story.java` |
 | Change the Demon King (`world/DemonKingAI.java`), Dead (`world/ReaperAI.java`) or the regular monsters (`world/EnemyAI.java`) | attacks, timing, HP is in `level/LevelFactory.java` / `level/Level.java` |
 | Change how the animations are chosen | `ui/CatRenderer.java`, `ui/DemonRenderer.java`, `ui/ReaperRenderer.java` |
-| Replace or add art | Edit `assets_src/`, then `python3 tools/prepare_assets.py` (needs `pillow` and `numpy`) |
+| Replace or add art | Download the packs from the links in `CREDITS.md` into `assets_src/` (not included in this repo), then run `python3 tools/prepare_assets.py` (needs `pillow` and `numpy`) |
 
 Adding a seventh stage: add it in `LevelFactory`, raise `LEVEL_COUNT`, add a chapter in `Story`,
 and add a node rectangle in `ui/UiLayout.java`.
 
 ## Credits and licence
 
-Code: [MIT](LICENSE). Art: third-party packs - see [CREDITS.md](CREDITS.md).
-**Two of the three packs came without a licence file, so check their terms before publishing this repo publicly.**
+Code: [MIT](LICENSE) - **the MIT licence covers the source code only.** Art and fonts are third-party works, each under its own terms - see [CREDITS.md](CREDITS.md). The original art packs are not redistributed here; the sprite strips in `src/main/resources/assets/` are included only as part of this game. This is a non-commercial student project.
